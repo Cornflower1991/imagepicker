@@ -22,6 +22,8 @@ import com.lzy.imagepicker.adapter.ImageGridAdapter;
 import com.lzy.imagepicker.bean.ImageFolder;
 import com.lzy.imagepicker.bean.ImageItem;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,15 +52,23 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
     private ListPopupWindow mFolderPopupWindow;  //ImageSet的PopupWindow
     private List<ImageFolder> mImageFolders;   //所有的图片文件夹
     private ImageGridAdapter mImageGridAdapter;  //图片九宫格展示的适配器
+    private ArrayList<ImageItem> lastPageSelect = new ArrayList<>(); //上个页面所选择的图片
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_grid);
 
+        Serializable extra = getIntent().getSerializableExtra(ImagePicker.EXTRA_HAS_SELECT_IMAGES);
+        if (extra != null) {
+            lastPageSelect = (ArrayList<ImageItem>) extra;
+        }
+
         imagePicker = ImagePicker.getInstance();
         imagePicker.clear();
         imagePicker.addOnImageSelectedListener(this);
+        imagePicker.setSelectedImages(lastPageSelect);
+
         DisplayMetrics dm = Utils.getScreenPix(this);
         screenWidth = dm.widthPixels;
         screenHeight = dm.heightPixels;

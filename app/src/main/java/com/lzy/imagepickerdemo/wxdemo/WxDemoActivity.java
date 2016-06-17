@@ -76,8 +76,9 @@ public class WxDemoActivity extends AppCompatActivity implements ImagePickerAdap
         switch (position) {
             case IMAGE_ITEM_ADD:
                 //打开选择,本次允许选择的数量
-                ImagePicker.getInstance().setSelectLimit(maxImgCount - selImageList.size());
+                ImagePicker.getInstance().setSelectLimit(maxImgCount);
                 Intent intent = new Intent(this, ImageGridActivity.class);
+                intent.putExtra(ImagePicker.EXTRA_HAS_SELECT_IMAGES, selImageList);
                 startActivityForResult(intent, REQUEST_CODE_SELECT);
                 break;
             default:
@@ -97,7 +98,8 @@ public class WxDemoActivity extends AppCompatActivity implements ImagePickerAdap
             //添加图片返回
             if (data != null && requestCode == REQUEST_CODE_SELECT) {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                selImageList.addAll(images);
+                selImageList = images;
+//                selImageList.addAll(images);
                 adapter.setImages(selImageList);
             }
         } else if (resultCode == ImagePicker.RESULT_CODE_BACK) {

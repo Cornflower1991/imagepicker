@@ -41,6 +41,7 @@ public class ImagePicker {
     public static final String EXTRA_RESULT_ITEMS = "extra_result_items";
     public static final String EXTRA_SELECTED_IMAGE_POSITION = "selected_image_position";
     public static final String EXTRA_IMAGE_ITEMS = "extra_image_items";
+    public static final String EXTRA_HAS_SELECT_IMAGES = "extra_has_select_images";
 
     private boolean multiMode = true;    //图片选择模式
     private int selectLimit = 9;         //最大选择图片数量
@@ -214,6 +215,14 @@ public class ImagePicker {
 
     public ArrayList<ImageItem> getSelectedImages() {
         return mSelectedImages;
+    }
+
+    public void setSelectedImages(ArrayList<ImageItem> items) {
+        this.mSelectedImages = items;
+    }
+
+    public void addSelectedImages(ArrayList<ImageItem> items) {
+        this.mSelectedImages.addAll(items);
     }
 
     public void clearSelectedImages() {
